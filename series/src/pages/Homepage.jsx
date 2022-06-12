@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AppBar, Box, Button, Container, createTheme, Grid, Paper, styled, Switch, ThemeProvider, Toolbar, Typography, } from '@mui/material';
+import { AppBar, Box, Button, Container, createTheme, Grid, Modal, Paper, styled, Switch, TextareaAutosize, ThemeProvider, Toolbar, Typography, } from '@mui/material';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 import LoginIcon from '@mui/icons-material/Login';
 import SignUpIcon from '@mui/icons-material/AssignmentInd';
@@ -23,10 +23,20 @@ export default function Homepage() {
         }
     })
 
+    const [openTutorial, setOpenTutorial] = useState(false);
+
+    const [openFeedback, setOpenFeedback] = useState(false);
+
+    const StyledModal = styled(Modal)({
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    })
+
     return (
         <>
             <ThemeProvider theme={darkTheme}>
-                <Box bgcolor="background.default" height="100vh">
+                <Box bgcolor="background.default" sx={{ minHeight: { xs: "140vh", sm: "130vh", md: "100vh" } }}>
                 <AppBar position="sticky">
                     <StyledToolbar>
                         <Grid container display="flex" justifyContent="space-between">
@@ -37,8 +47,8 @@ export default function Homepage() {
                                 <LiveTvIcon />
                             </Grid>
                             <Grid item display="flex" alignItems="center">
-                                <Button startIcon={<LoginIcon />} color="secondary" variant="contained">Login</Button>
-                                <Button startIcon={<SignUpIcon />} color="secondary" variant="contained" sx={{ "marginLeft": "10px" }}>Sign up</Button>
+                                <Button startIcon={<LoginIcon />} color="secondary" variant="contained" href="/login">Login</Button>
+                                <Button startIcon={<SignUpIcon />} color="secondary" variant="contained" href="/signin" sx={{ "marginLeft": "10px" }}>Sign up</Button>
                             </Grid>
                         </Grid>
                     </StyledToolbar>
@@ -70,11 +80,64 @@ export default function Homepage() {
                         </Paper>
                     </Box>
 
-                    <Box textAlign="center" mt={5}>
-                        <Button size="large" color="secondary" variant="contained">How to use?</Button>
-                        <Button size="large" color="secondary" variant="contained" sx={{ "marginLeft": "10px" }}>Send me a feedback</Button>
+                    <Box textAlign="center"  sx={{marginBottom: "80px"}}>
+                        <Button size="large" color="secondary" variant="outlined" onClick={() => setOpenTutorial(true)}>How to use?</Button>
+                        <Button size="large" color="secondary" variant="outlined" sx={{ "marginLeft": "10px" } } onClick={() => setOpenFeedback(true)}>Send me a feedback</Button>
                     </Box>
                 </Container>
+
+                <StyledModal 
+                open={openTutorial}
+                onClose={() => setOpenTutorial(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                >
+                    <Box>
+                        <Paper sx={{ width: { xs:"250px", sm:"400px" }, padding:"30px"}} elevation={25}>
+                            <Typography variant="h6" textAlign="center" mb={2}>
+                                Tutorial
+                            </Typography>
+                            <Typography>
+                                1. This application has as its on objective, give you tools that will help you to
+                                organize yourself with your TVs series or shows. Here, you can list all of them and
+                                check how many and which episode you watched, for example.
+                                <br/>
+                                2. Just create an account and use it, click bellow! 
+                            </Typography>
+                            <Box textAlign="center" mt={2}>
+                                <Button variant="outlined" color="secondary">
+                                    Sign up
+                                </Button>
+                            </Box>
+                        </Paper>
+                    </Box>
+                </StyledModal>
+
+                <StyledModal 
+                open={openFeedback}
+                onClose={() => setOpenFeedback(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                >
+                    <Box>
+                        <Paper sx={{ width: { xs:"250px", sm:"400px" }, padding:"30px"}} elevation={25}>
+                            <Typography variant="h6" textAlign="center" mb={2}>
+                                Feedback
+                            </Typography>
+                            <TextareaAutosize
+                            aria-label="minimum height"
+                            minRows={10}
+                            placeholder="Thanks for helping me!"
+                            style={{ width: "100%" }}
+                            />
+                            <Box textAlign="center" mt={2}>
+                                <Button variant="outlined" color="secondary">
+                                    Send
+                                </Button>
+                            </Box>
+                        </Paper>
+                    </Box>
+                </StyledModal>
             </Box>
         </ThemeProvider>
         </>
