@@ -1,6 +1,4 @@
 import React from "react";
-import { Typography, } from '@mui/material';
-import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import { Box } from "@mui/system";
 
 export default function NotFound()
