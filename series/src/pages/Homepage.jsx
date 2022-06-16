@@ -102,7 +102,7 @@ export default function Homepage() {
                                 organize yourself with your TVs series or shows. Here, you can list all of them and
                                 check how many and which episode you watched, for example.
                                 <br/>
-                                2. Just create an account and use it, click bellow! 
+                                2. Just create an account and use it, click bellow!
                             </Typography>
                             <Box textAlign="center" mt={2}>
                                 <Button variant="outlined" color="secondary">
@@ -113,7 +113,7 @@ export default function Homepage() {
                     </Box>
                 </StyledModal>
 
-                <StyledModal 
+                <StyledModal
                 open={openFeedback}
                 onClose={() => setOpenFeedback(false)}
                 aria-labelledby="modal-modal-title"
