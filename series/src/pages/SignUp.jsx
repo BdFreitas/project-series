@@ -3,6 +3,7 @@ import React from "react";
 import { pink } from "@mui/material/colors";
 import SignUpIcon from "@mui/icons-material/AssignmentInd";
 import { useNavigate } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
 
 export default function SignUp() {
     const navigator = useNavigate();
@@ -21,7 +22,7 @@ export default function SignUp() {
             <ThemeProvider theme={darkTheme}>
                     <Box alignItems={"center"} display={"flex"} bgcolor="background.default" justifyContent="center" height={"100vh"}>
                         <Paper elevation={7} sx={{ width: 380, height: 430, borderRadius: 5, padding: 7 }}>
-                            <Typography variant="h4" textAlign="center">Sign Up <SignUpIcon /></Typography>
+                            <Typography variant="h4" textAlign="center"><HomeIcon onClick={() => navigator("/")} sx={{ float: "left", cursor: "pointer" }}/>Sign Up <SignUpIcon /></Typography>
                             
                             <TextField label="Email" color="primary" variant="filled" sx={{ width:"100%", margin: "20px 0" }}/>
                             <TextField label="Password" color="primary" variant="filled" sx={{ width:"100%", margin: "20px 0" }}/>
