@@ -117,9 +117,9 @@ export default function Series()
                                         <MenuItem>
                                             <MoonIcon color="action"/>
                                             <Switch
-                                            onClick={ () => {
+                                            onChange={ () => {
+                                                sessionStorage.setItem("mode", !mode);
                                                 setMode(!mode);
-                                                sessionStorage.setItem("mode", mode);
                                             } }
                                             />
                                         </MenuItem>
@@ -140,7 +140,6 @@ export default function Series()
                 </AppBar>
 
                 <Container>
-                    
                 </Container>
             </ThemeProvider>
         </>
