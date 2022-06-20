@@ -40,22 +40,59 @@ export default function Homepage() {
     return (
         <>
                 <ThemeProvider theme={darkTheme}>
-                    <Box bgcolor="background.default" sx={{ minHeight: { xs: "140vh", sm: "130vh", md: "100vh" } }}>
+                    <Box
+                    bgcolor="background.default"
+                    sx={{ minHeight: { xs: "140vh", sm: "130vh", md: "100vh" } }}
+                    >
                     <AppBar position="sticky">
-                        <StyledToolbar>
-                            <Grid container display="flex" justifyContent="space-between">
-                                <Grid item sx={{ display: { xs: "none", sm: "block" } }}>
-                                    <Typography variant="h5">Series Management</Typography>
+                        <Container>
+                            <StyledToolbar>
+                                <Grid
+                                container
+                                display="flex"
+                                justifyContent="space-between"
+                                >
+                                    <Grid
+                                    item
+                                    alignItems="center"
+                                    sx={{ display: { xs: "none", sm: "flex" } }}
+                                    >
+                                        <Typography variant="h5">Series Management</Typography>
+                                    </Grid>
+                                    <Grid
+                                    item
+                                    alignItems="center"
+                                    sx={{ display: { xs: "flex", sm: "none" } }}
+                                    >
+                                        <LiveTvIcon />
+                                    </Grid>
+                                    <Grid
+                                    item
+                                    display="flex"
+                                    alignItems="center"
+                                    >
+                                        <Button
+                                        startIcon={<LoginIcon />}
+                                        color="secondary"
+                                        variant="contained"
+                                        href="/login"
+                                        >
+                                            Login
+                                        </Button>
+
+                                        <Button
+                                        startIcon={<SignUpIcon />}
+                                        color="secondary"
+                                        variant="contained"
+                                        href="/sign-up"
+                                        sx={{ "marginLeft": "10px" }}
+                                        >
+                                            Sign up
+                                        </Button>
+                                    </Grid>
                                 </Grid>
-                                <Grid item sx={{ display: { xs: "block", sm: "none" }, marginTop: "5px" }}>
-                                    <LiveTvIcon />
-                                </Grid>
-                                <Grid item display="flex" alignItems="center">
-                                    <Button startIcon={<LoginIcon />} color="secondary" variant="contained" href="/login">Login</Button>
-                                    <Button startIcon={<SignUpIcon />} color="secondary" variant="contained" href="/sign-up" sx={{ "marginLeft": "10px" }}>Sign up</Button>
-                                </Grid>
-                            </Grid>
-                        </StyledToolbar>
+                            </StyledToolbar>
+                        </Container>
                     </AppBar>
 
                     <Box sx={{ border: "2 solid black" }}>
@@ -65,10 +102,17 @@ export default function Homepage() {
                                     Hello!
                                 </Typography>
                                 <Typography color="text.primary" variant="h4" textAlign="center">
-                                    Welcome to my first Material-UI project! 
+                                    Welcome to my first Material-UI project!
                                 </Typography>
-                                <Box color="text.primary" variant="h4" mt={2} display="flex" justifyContent="center" alignItems="center">
-                                <MoonIcon /><Switch onChange={() => { sessionStorage.setItem("mode", !mode); setMode(!mode);  }} />
+                                <Box
+                                color="text.primary"
+                                variant="h4"
+                                mt={2}
+                                display="flex"
+                                justifyContent="center"
+                                alignItems="center"
+                                >
+                                    <MoonIcon /><Switch onChange={() => { sessionStorage.setItem("mode", !mode); setMode(!mode);  }} />
                                 </Box>
                             </Box>
                         </Container>
@@ -84,20 +128,39 @@ export default function Homepage() {
                             </Paper>
                         </Box>
 
-                        <Box textAlign="center"  sx={{marginBottom: "80px"}}>
-                            <Button size="large" color="secondary" variant="outlined" onClick={() => setOpenTutorial(true)}>How to use?</Button>
-                            <Button size="large" color="secondary" variant="outlined" sx={{ "marginLeft": "10px" } } onClick={() => setOpenFeedback(true)}>Send me a feedback</Button>
+                        <Box textAlign="center" paddingBottom={10}>
+                            <Button
+                            size="large"
+                            color="secondary"
+                            variant="outlined"
+                            sx={{ "marginLeft": "10px" }}
+                            onClick={() => setOpenFeedback(true)}
+                            >
+                                Send me a feedback
+                            </Button>
+
+                            <Button
+                            size="large"
+                            color="secondary"
+                            variant="outlined"
+                            onClick={ () => setOpenTutorial(true) }
+                            >
+                                How to use?
+                            </Button>
                         </Box>
                     </Container>
 
-                    <StyledModal 
+                    <StyledModal
                     open={openTutorial}
                     onClose={() => setOpenTutorial(false)}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                     >
                         <Box>
-                            <Paper sx={{ width: { xs:"250px", sm:"400px" }, padding:"30px"}} elevation={25}>
+                            <Paper
+                            sx={{ width: { xs:"250px", sm:"400px" }, padding:"30px"}}
+                            elevation={25}
+                            >
                                 <Typography variant="h6" textAlign="center" mb={2}>
                                     Tutorial
                                 </Typography>
@@ -109,7 +172,7 @@ export default function Homepage() {
                                     2. Just create an account and use it, click bellow!
                                 </Typography>
                                 <Box textAlign="center" mt={2}>
-                                    <Button variant="outlined" color="secondary">
+                                    <Button href="/sign-up" variant="outlined" color="secondary">
                                         Sign up
                                     </Button>
                                 </Box>

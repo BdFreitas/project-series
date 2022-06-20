@@ -3,6 +3,7 @@ import React from "react";
 import { pink } from "@mui/material/colors";
 import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
 
 export default function Login() {
     const navigator = useNavigate();
@@ -21,13 +22,17 @@ export default function Login() {
             <ThemeProvider theme={darkTheme}>
                     <Box alignItems={"center"} display={"flex"} bgcolor="background.default" justifyContent="center" height={"100vh"}>
                         <Paper elevation={7} sx={{ width: 380, height: 430, borderRadius: 5, padding: 7 }}>
-                            <Typography variant="h4" textAlign="center">Login <LoginIcon /></Typography>
-                            
+                            <Typography variant="h4" display="flex" justifyContent="space-between">
+                                <HomeIcon onClick={() => navigator("/")} sx={{ mt: "10px", cursor: "pointer" }}/>
+                                Login
+                                <LoginIcon sx={{ mt: "10px" }}/>
+                            </Typography>
+
                             <TextField label="Email" color="primary" variant="filled" sx={{ width:"100%", margin: "20px 0" }}/>
                             <TextField label="Password" color="primary" variant="filled" sx={{ width:"100%", margin: "20px 0 40px 0" }}/>
 
                             <Box marginTop="20px">
-                                <Button variant="contained" color="secondary" sx={{ width: "100%" }}>Login</Button>
+                                <Button href="/series" variant="contained" color="secondary" sx={{ width: "100%" }}>Login</Button>
                                 <Typography  fontSize="small" textAlign="center" mt={2} sx={{ cursor: "pointer" }}>
                                     <u onClick={() => navigator("/sign-up")}>Dont have an account? Click here!</u>
                                 </Typography>
