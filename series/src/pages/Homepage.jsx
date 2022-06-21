@@ -41,7 +41,7 @@ export default function Homepage() {
         <>
                 <ThemeProvider theme={darkTheme}>
                     <Box
-                    // bgcolor="background.default"
+                    bgcolor="background.default"
                     sx={{ minHeight: { xs: "140vh", sm: "130vh", md: "100vh" } }}
                     >
                     <AppBar position="sticky">
