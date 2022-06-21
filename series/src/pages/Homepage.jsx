@@ -41,7 +41,7 @@ export default function Homepage() {
         <>
                 <ThemeProvider theme={darkTheme}>
                     <Box
-                    bgcolor="background.default"
+                    // bgcolor="background.default"
                     sx={{ minHeight: { xs: "140vh", sm: "130vh", md: "100vh" } }}
                     >
                     <AppBar position="sticky">
@@ -133,19 +133,19 @@ export default function Homepage() {
                             size="large"
                             color="secondary"
                             variant="outlined"
-                            sx={{ "marginLeft": "10px" }}
-                            onClick={() => setOpenFeedback(true)}
+                            onClick={ () => setOpenTutorial(true) }
                             >
-                                Send me a feedback
+                                How to use?
                             </Button>
 
                             <Button
                             size="large"
                             color="secondary"
                             variant="outlined"
-                            onClick={ () => setOpenTutorial(true) }
+                            sx={{ "marginLeft": "10px" }}
+                            onClick={() => setOpenFeedback(true)}
                             >
-                                How to use?
+                                Send me a feedback
                             </Button>
                         </Box>
                     </Container>
