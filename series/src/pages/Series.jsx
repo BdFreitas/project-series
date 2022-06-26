@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { AppBar, Avatar, Box, Button, Container, createTheme, Divider, Fab, Grid, IconButton, Menu, MenuItem, Modal, Paper, styled, Switch, TextField, ThemeProvider, Toolbar, Tooltip, Typography } from "@mui/material";
+import { AppBar, Avatar, Box, Button, Container, createTheme, Divider, Fab, Grid, IconButton, Menu, MenuItem, Modal, Paper, Stack, styled, Switch, TextField, ThemeProvider, Toolbar, Tooltip, Typography } from "@mui/material";
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 import { pink } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import MoonIcon from '@mui/icons-material/Brightness3';
 import Logout from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
+import Serie from "../components/Serie";
 
 export default function Series() {
+    // Navigator
     const navigator = useNavigate();
 
     // Theme
@@ -58,7 +60,22 @@ export default function Series() {
         );
     }
 
-    // Modal stuff
+    // Content - displays
+    const [series, setSeries] = useState([""]);
+
+    const [noContentDisplay, setNoContentDisplay] = useState("none");
+    const [seriesDisplay, setSeriesDisplay] = useState("none");
+
+    useEffect(() => {
+        if (series.length > 0) {
+            setSeriesDisplay("");
+            return;
+        }
+
+        setNoContentDisplay("");
+    }, series)
+
+    // Add serie's modal
     const StyledModal = styled(Modal)({
         display: "flex",
         justifyContent: "center",
@@ -67,7 +84,8 @@ export default function Series() {
 
     const [openAddSerie, setOpenAddSerie] = useState(false);
 
-
+    // My account modal
+    const [openMyAccount, setOpenMyAccount] = useState(false);
 
 
     return (
@@ -77,12 +95,18 @@ export default function Series() {
                 <Box
                     bgcolor="background.default"
                     height="100vh"
+                    overflow="auto"
                 >
                     {/*Navbar*/}
                     <AppBar position="sticky">
-                        <Container>
-                            <Toolbar>
-                                <Grid container display="flex" justifyContent="space-between">
+                        <Container
+                        >
+                                <Grid
+                                container
+                                display="flex"
+                                justifyContent="space-between"
+                                minHeight="64px"
+                                >
                                     <Grid
                                         item
                                         alignItems="center"
@@ -142,7 +166,11 @@ export default function Series() {
                                             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                                             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                         >
-                                            <MenuItem>
+                                            <MenuItem
+                                            onClick={() => {
+                                                setOpenMyAccount(true);
+                                                setAnchorEl(null);
+                                                }}>
                                                 <Avatar />
                                                 <Typography>My account</Typography>
                                             </MenuItem>
@@ -157,7 +185,7 @@ export default function Series() {
                                                 <Logout color="action" />
                                                 {/*
                                             The best way is to don't use margin, but ListItemIcon tag instead...
-                                            I didn't use it here, because it would make the Switch tag's alignment
+                                            I didn't use it here, because it would make the Switch Tag's alignment
                                             weird.
                                             */}
                                                 <Typography ml={1.4}>Logout</Typography>
@@ -165,19 +193,39 @@ export default function Series() {
                                         </Menu>
                                     </Grid>
                                 </Grid>
-                            </Toolbar>
                         </Container>
                     </AppBar>
 
                     {/*Content*/}
                     <Container>
-                        <Box textAlign="center" mt={7}>
+                        <Box
+                        textAlign="center"
+                        mt={7}
+                        display={noContentDisplay}
+                        >
                             <Typography variant="h4" color="text.primary">
                                 Seems there is nothing to be shown for you, yet...
                             </Typography>
                             <Typography color="text.primary">
                                 Click at the bottom "+" button to add your first serie!
                             </Typography>
+                        </Box>
+
+                        <Box
+                        textAlign="center"
+                        mt={7}
+                        display={seriesDisplay}
+                        >
+                            <Stack justifyContent="center" alignItems="center" spacing={2}>
+                                <Serie/>
+                                <Serie/>
+                                <Serie/>
+                                <Serie/>
+                                <Serie/>
+                                <Serie/>
+                                <Serie/>
+                                <Serie/>
+                            </Stack>
                         </Box>
 
                         {/*Adding series feature*/}
@@ -203,7 +251,7 @@ export default function Series() {
                             aria-describedby="modal-modal-description"
                         >
                             <Paper
-                                sx={{ 
+                                sx={{
                                     height: "380px",
                                     width: "30%",
                                     padding: "20px"
@@ -216,13 +264,79 @@ export default function Series() {
                                 justifyContent="space-around"
                                 alignItems="center"
                                 >
-                                    <Typography variant="h6">Add a serie:</Typography>
-                                    <TextField width="40px" variant="outlined" label="Name"/>
-                                    <TextField width="40px" variant="outlined" label="Amount of seasons" type="number"/>
-                                    <TextField width="40px" variant="outlined" label="Amount of episodes/season" type="number"/>
+                                    <Typography variant="h5">Add a serie:</Typography>
+                                    <TextField
+                                    width="40px"
+                                    variant="outlined"
+                                    label="Name"
+                                    />
+                                    <TextField
+                                    width="40px"
+                                    variant="outlined"
+                                    label="Amount of seasons" type="number"
+                                    />
+                                    <TextField
+                                    width="40px"
+                                    variant="outlined"
+                                    label="Amount of episodes/season" type="number"
+                                    />
                                 </Box>
                                 <Box textAlign="center" mt={4}>
                                     <Button variant="contained">Done</Button>
+                                </Box>
+                            </Paper>
+                        </StyledModal>
+
+                        {/*My account modal*/}
+                        <StyledModal
+                            open={openMyAccount}
+                            onClose={() => setOpenMyAccount(false)}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Paper
+                                sx={{
+                                    height: 500,
+                                    width: {
+                                        xs:"60%",
+                                        md:"40%",
+                                        lg:"30%",
+                                        xl: "20%"
+                                    },
+                                    padding: "20px"
+                                }}
+                            >
+                                <Box
+                                display="flex"
+                                flexDirection="column"
+                                minHeight={280}
+                                textAlign="flex-start"
+                                >
+                                    <Typography variant="h5" textAlign="center">
+                                        My account
+                                    </Typography>
+                                    <Typography mt={2} mb={1}>Your email:</Typography>
+                                    <TextField mb={2} disabled/>
+
+                                    <Typography mt={2} mb={1}>Change password:</Typography>
+                                    <TextField
+                                    sx={{ marginBottom:"20px" }}
+                                    label="your current password"
+                                    type="password"
+                                    />
+                                    <TextField
+                                    sx={{ marginBottom:"20px" }}
+                                    label="your new password"
+                                    type="password"
+                                    />
+                                    <TextField
+                                    sx={{ marginBottom:"30px" }}
+                                    label="confirm your new password"
+                                    type="password"
+                                    />
+                                </Box>
+                                <Box textAlign="center">
+                                    <Button variant="contained">Save</Button>
                                 </Box>
                             </Paper>
                         </StyledModal>
