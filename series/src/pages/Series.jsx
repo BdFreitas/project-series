@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AppBar, Avatar, Box, Button, Container, createTheme, Divider, Fab, Grid, IconButton, Menu, MenuItem, Modal, Paper, Step, StepLabel, Stepper, styled, Switch, TextField, ThemeProvider, Toolbar, Tooltip, Typography } from "@mui/material";
+import { AppBar, Avatar, Box, Button, Container, createTheme, Divider, Fab, Grid, IconButton, Menu, MenuItem, Modal, Paper, styled, Switch, TextField, ThemeProvider, Toolbar, Tooltip, Typography } from "@mui/material";
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 import { pink } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
@@ -67,68 +67,7 @@ export default function Series() {
 
     const [openAddSerie, setOpenAddSerie] = useState(false);
 
-    // Stepper stuff
-    const [activeStep, setActiveStep] = useState(0);
 
-    const [backButtonState, setBackButtonState] = useState(true);
-    const [nextButtonState, setNextButtonState] = useState(false);
-
-    function checkStep()
-    {
-        if (activeStep === 0) {
-            setStepOneDisplay("");
-            setStepTwoDisplay("none");
-            setStepThreeDisplay("none");
-            return;
-        }
-
-        if (activeStep === 1) {
-            setStepOneDisplay("none");
-            setStepTwoDisplay("");
-            setStepThreeDisplay("none");
-            return;
-        }
-
-        if (activeStep === 2) {
-            setStepOneDisplay("none");
-            setStepTwoDisplay("none");
-            setStepThreeDisplay("");
-            return;
-        }
-
-        if (activeStep === 3) {
-            setStepOneDisplay("none");
-            setStepTwoDisplay("none");
-            setStepThreeDisplay("none");
-            return;
-        }
-    }
-
-    const previousStep = () => {
-        setActiveStep((currentStep) => currentStep - 1);
-        setNextButtonState(false);
-        checkStep();
-
-        if (activeStep === 1) {
-            setBackButtonState(true);
-        }
-    }
-
-    const nextStep = () => {
-        setActiveStep((currentStep) => currentStep + 1);
-        setBackButtonState(false);
-        checkStep();
-
-        if (activeStep === 2) {
-            setNextButtonState(true);
-        }
-    }
-
-    const [stepOneDisplay, setStepOneDisplay] = useState("")
-
-    const [stepTwoDisplay, setStepTwoDisplay] = useState("none")
-
-    const [stepThreeDisplay, setStepThreeDisplay] = useState("none")
 
 
     return (
@@ -271,69 +210,20 @@ export default function Series() {
                                 }}
                             >
                                 <Box
-                                    display="flex"
-                                    justifyContent="space-between"
+                                display="flex"
+                                flexDirection="column"
+                                minHeight={280}
+                                justifyContent="space-around"
+                                alignItems="center"
                                 >
-                                    <Stepper orientation="vertical" activeStep={activeStep}>
-                                        <Step>
-                                            <StepLabel>Serie's name and amount of Seasons</StepLabel>
-                                        </Step>
-                                        <Step>
-                                            <StepLabel>Amount of seasons</StepLabel>
-                                        </Step>
-                                        <Step>
-                                            <StepLabel>Amount of episodes</StepLabel>
-                                        </Step>
-                                    </Stepper>
-
-                                    {/*Step 1*/}
-                                    <Box
-                                    // padding={1.2}
-                                    display={stepOneDisplay}
-                                    >
-                                        <Typography mt={1} mb={1}>Type bellow its name:</Typography>
-                                        <TextField label="fase 1"/>
-                                    </Box>
-
-                                    {/*Step 2*/}
-                                    <Box
-                                    padding={1.2}
-                                    display={stepTwoDisplay}
-                                    >
-                                        <Typography mt={1} mb={1}>Type bellow its name:</Typography>
-                                        <TextField label="fase 2" type="number"/>
-                                    </Box>
-
-                                    {/*Step 3*/}
-                                    <Box
-                                    padding={1.2}
-                                    display={stepThreeDisplay}
-                                    >
-                                        <Typography mt={1} mb={1}>Type bellow its name:</Typography>
-                                        <TextField label="fase 3"/>
-                                    </Box>
+                                    <Typography variant="h6">Add a serie:</Typography>
+                                    <TextField width="40px" variant="outlined" label="Name"/>
+                                    <TextField width="40px" variant="outlined" label="Amount of seasons" type="number"/>
+                                    <TextField width="40px" variant="outlined" label="Amount of episodes/season" type="number"/>
                                 </Box>
-
-                                <Box
-                                    // border={1}
-                                    display="flex"
-                                    justifyContent="space-between"
-                                    mt={5}
-                                >
-                                    <Button
-                                        onClick={() => previousStep()}
-                                        disabled={backButtonState}
-                                    >
-                                        Back
-                                    </Button>
-                                    
-                                    <Button
-                                        onClick={() => nextStep()}
-                                        disabled={nextButtonState}
-                                    >
-                                        Next
-                                    </Button>
-                                </Box>                           
+                                <Box textAlign="center" mt={4}>
+                                    <Button variant="contained">Done</Button>
+                                </Box>
                             </Paper>
                         </StyledModal>
                     </Container>
