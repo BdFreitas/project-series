@@ -1,6 +1,6 @@
 package series.javaapi.request;
 
-public class UsuarioRequest
+public class UserRequest
 {
     // Atributes
     private Integer id;
@@ -8,7 +8,7 @@ public class UsuarioRequest
     private String email;
 
     // Constructor
-    public UsuarioRequest(Integer id, String email)
+    public UserRequest(Integer id, String email)
     {
         this.id = id;
         this.email = email;

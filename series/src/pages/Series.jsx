@@ -8,7 +8,8 @@ import Logout from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
 import Serie from "../components/Serie";
 
-export default function Series() {
+export default function Series()
+{
     // Navigator
     const navigator = useNavigate();
 

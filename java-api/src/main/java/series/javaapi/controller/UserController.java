@@ -4,21 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import series.javaapi.entity.User;
-import series.javaapi.repository.UsuarioRepository;
-import series.javaapi.request.UsuarioRequest;
+import series.javaapi.repository.UserRepository;
+import series.javaapi.request.UserRequest;
 
 import javax.validation.Valid;
-
-import java.util.Optional;
 
 import static org.springframework.http.ResponseEntity.status;
 
 @RestController
 @RequestMapping("/usuarios")
-public class UsuarioController
+public class UserController
 {
     @Autowired
-    private UsuarioRepository repository;
+    private UserRepository repository;
 
     @PostMapping
     public ResponseEntity postUsuario(@Valid @RequestBody User user)
@@ -29,7 +27,7 @@ public class UsuarioController
 
     @PutMapping
     public ResponseEntity putUsuario(
-            @RequestBody UsuarioRequest userParam,
+            @RequestBody UserRequest userParam,
             @PathVariable String newPassword)
     {
         User user = null;

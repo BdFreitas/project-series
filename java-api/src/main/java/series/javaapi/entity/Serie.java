@@ -9,30 +9,29 @@ public class Serie
 {
     // Atributes
     @Id
-    private Integer id;
+    private Integer idSerie;
 
     private String name;
 
     @ManyToOne
     private User fkUser;
 
+    // Constructor
+    public Serie(String name, User fkUser)
+    {
+        this.name = name;
+        this.fkUser = fkUser;
+    }
+
     // No-argument constructor.
     public Serie()
     {
     }
 
-    // Constructor
-    public Serie(Integer id, String name, User fkUser)
-    {
-        this.id = id;
-        this.name = name;
-        this.fkUser = fkUser;
-    }
-
     // Getters
-    public Integer getId()
+    public Integer getIdSerie()
     {
-        return id;
+        return idSerie;
     }
 
     public String getName()
