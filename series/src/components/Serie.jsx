@@ -28,7 +28,7 @@ export default function Serie(props)
                             <MovieIcon />
                         </ListItemIcon>
 
-                        <ListItemText primary="Serie" />
+                        <ListItemText primary={props.name} />
 
                         <Tooltip title="Delete">
                             <IconButton>

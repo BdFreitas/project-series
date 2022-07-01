@@ -5,45 +5,56 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import series.javaapi.entity.User;
 import series.javaapi.repository.UserRepository;
-import series.javaapi.request.UserRequest;
+import series.javaapi.request.AuthUserRequest;
+import series.javaapi.service.UserService;
 
 import javax.validation.Valid;
 
 import static org.springframework.http.ResponseEntity.status;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/users")
 public class UserController
 {
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
 
     @PostMapping
-    public ResponseEntity postUsuario(@Valid @RequestBody User user)
+    @CrossOrigin
+    public ResponseEntity postUser(@RequestBody @Valid User user)
     {
-        repository.save(user);
-        return status(200).build();
+        UserService userService = new UserService();
+        String email = user.getEmail();
+
+        User checkIfEmailExists = userRepository.
+                findByEmail(email);
+
+        if (checkIfEmailExists != null) {
+            return status(409).build();
+        }
+
+        userRepository.save(user);
+
+        User savedUser = userRepository.
+                findByEmail(email);
+
+        return status(201).body(savedUser);
     }
 
-    @PutMapping
-    public ResponseEntity putUsuario(
-            @RequestBody UserRequest userParam,
-            @PathVariable String newPassword)
+    @PostMapping("/authentication")
+    @CrossOrigin
+    public ResponseEntity authUser(@RequestBody @Valid AuthUserRequest user)
     {
-        User user = null;
-        user = repository.getById(userParam.getId());
+        String email = user.getEmail();
+        String password = user.getPassword();
 
-        if (user.equals(null)) {
+        AuthUserRequest authUser = userRepository.
+                findByEmailAndPassword(email, password);
+
+        if (authUser == null) {
             return status(404).build();
         }
 
-        if (!userParam.getEmail().equals(user.getEmail())) {
-            return status(403).build();
-        }
-
-        user.setPassword(newPassword);
-        repository.save(user);
-
-        return status(200).build();
+        return status(200).body(authUser);
     }
 }

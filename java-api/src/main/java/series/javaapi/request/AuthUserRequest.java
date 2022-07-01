@@ -1,28 +1,37 @@
 package series.javaapi.request;
 
-public class UserRequest
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+public class AuthUserRequest
 {
     // Atributes
-    private Integer id;
+    private Integer idUser;
 
+    @Email
+    @NotBlank
     private String email;
 
+    @NotBlank
+    private String password;
+
     // Constructor
-    public UserRequest(Integer id, String email)
+    public AuthUserRequest(Integer idUser, String email, String password)
     {
-        this.id = id;
+        this.idUser = idUser;
         this.email = email;
+        this.password = password;
     }
 
     // Getters
-    public Integer getId()
+    public Integer getIdUser()
     {
-        return id;
+        return idUser;
     }
 
-    public void setId(Integer id)
+    public void setIdUser(Integer idUser)
     {
-        this.id = id;
+        this.idUser = idUser;
     }
 
     public String getEmail() {
@@ -31,5 +40,15 @@ public class UserRequest
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
     }
 }

@@ -7,6 +7,7 @@ import MoonIcon from '@mui/icons-material/Brightness3';
 import Logout from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
 import Serie from "../components/Serie";
+import api from "../api";
 
 export default function Series()
 {
@@ -88,6 +89,35 @@ export default function Series()
     // My account modal
     const [openMyAccount, setOpenMyAccount] = useState(false);
 
+    // Get series request
+    useEffect(() => {
+        let idUser = sessionStorage.getItem("idUser") ?
+            sessionStorage.getItem("idUser") :
+            null;
+
+        api
+        .get(`/series/${idUser}`)
+        .then((response) => {
+
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    })
+
+    //Verify authenticantion
+    useEffect(() => {
+        if (!sessionStorage.getItem("idUser")) {
+            navigator("/login");
+        }
+    }, [])
+
+    //Logout
+    function logout()
+    {
+        sessionStorage.clear();
+        navigator("/");
+    }
 
     return (
         <>
@@ -182,7 +212,7 @@ export default function Series()
                                                     verifySwitch()
                                                 }
                                             </MenuItem>
-                                            <MenuItem>
+                                            <MenuItem onClick={() => logout()}>
                                                 <Logout color="action" />
                                                 {/*
                                             The best way is to don't use margin, but ListItemIcon tag instead...

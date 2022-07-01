@@ -3,7 +3,7 @@ package series.javaapi.request;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class SerieRequest
+public class CreateSerieRequest
 {
     // Atributes
     @NotNull

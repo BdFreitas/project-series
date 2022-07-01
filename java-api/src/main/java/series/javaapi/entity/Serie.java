@@ -1,16 +1,17 @@
 package series.javaapi.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Serie
 {
     // Atributes
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idSerie;
 
+    @NotBlank
     private String name;
 
     @ManyToOne
@@ -38,11 +39,4 @@ public class Serie
     {
         return name;
     }
-
-    public User getFkUsuario()
-    {
-        return fkUser;
-    }
-
-    //  Setters
 }

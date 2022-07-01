@@ -18,8 +18,16 @@ public class Season
     {
 
     }
+
+    //Constructor
     public Season(Serie serie)
     {
         this.serie = serie;
+    }
+
+    //Getters
+    public Integer getIdSeason()
+    {
+        return this.idSeason;
     }
 }

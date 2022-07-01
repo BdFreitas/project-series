@@ -1,10 +1,13 @@
 package series.javaapi.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import series.javaapi.entity.Serie;
 
-import org.hibernate.metamodel.model.convert.spi.JpaAttributeConverter;
+import java.util.List;
 
-public interface SerieRepository extends JpaAttributeConverter<Serie, Integer>
+public interface SerieRepository extends JpaRepository<Serie, Integer>
 {
-    Serie findByFkUserIdUserOrderByIdSerieDesc(Integer idUser);
+    Serie findFirstByFkUserIdUserOrderByIdSerieDesc(Integer idUser);
+
+    List<Serie> findByFkUserIdUserOrderByIdSerieDesc(Integer idUser);
 }
