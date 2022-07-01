@@ -9,13 +9,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class User
+public class Userr
 {
     // Atributes
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idUser;
 
     @Email
     @NotBlank
@@ -25,21 +25,20 @@ public class User
     private String password;
 
     // No-argument constructor
-    public User()
+    public Userr()
     {
     }
 
     // Constructor
-    public User(Integer id, String email, String password)
+    public Userr(String email, String password)
     {
-        this.id = id;
         this.email = email;
         this.password = password;
     }
 
     // Getters
-    public Integer getId() {
-        return id;
+    public Integer getIdUser() {
+        return idUser;
     }
 
     public String getEmail() {
@@ -48,8 +47,8 @@ public class User
 
 
     // Setters
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
     }
 
     public void setEmail(String email) {
