@@ -1,20 +1,53 @@
 import StarBorder from "@mui/icons-material/StarBorder";
-import { Button, Checkbox, FormControlLabel, ListItemButton, ListItemIcon, ListItemText, Modal, Paper, styled, Typography } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, ListItemButton, ListItemIcon, ListItemText, Modal, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
+import api from "../api";
 
 export default function Season(props) {
     //Episode's modal
     const [openEpisodes, setOpenEpisodes] = useState(false);
 
-    const StyledModal = styled(Modal)({
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-    })
+    const handleClick = () => {
+        setOpenEpisodes(true);
+        getEpisodes();
+        showEpisodes();
+    }
 
     //Episodes
-    const [episodes, setEpisodes] = useState([1, 2,1, 2,1, 2,1, 2,1, 2,1, 2,1, 2,1, 2]);
+    const [episodes, setEpisodes] = useState([]);
+
+    function getEpisodes()
+    {
+        api
+        .get(`/episodes/${props.idSeason}`)
+        .then((response) => {
+            if (response.status === 200) {
+                setEpisodes(response.data);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+
+    function showEpisodes()
+    {
+        return(
+            episodes.map((episode, index) => {
+                return(
+                    <FormControlLabel
+                    control={
+                        <Checkbox
+                        inputProps={{ 'aria-label': 'controlled' }}
+                        />
+                    }
+                    label={(index + 1) < 10 ? `EP0${index + 1}` : `EP${index + 1}`}
+                    />
+                )
+            })
+        )
+    }
 
     return (
         <>
@@ -25,16 +58,21 @@ export default function Season(props) {
 
                 <ListItemText
                     primary={`Season ${props.index}`}
-                    secondary="10/20 episodes watched."
+                    secondary="10/20 watched episodes."
                 />
-                <Button onClick={() => setOpenEpisodes(true)}>Show episodes</Button>
+                <Button onClick={handleClick}>Show episodes</Button>
             </ListItemButton>
 
-            <StyledModal
+            <Modal
                 open={openEpisodes}
                 onClose={() => setOpenEpisodes(false)}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center"
+                }}
             >
                 <Paper
                     sx={{
@@ -50,7 +88,6 @@ export default function Season(props) {
                         {`Season ${props.index}`}
                     </Typography>
                     <Box>
-
                         <Box
                         display="flex"
                         flexWrap="wrap"s
@@ -58,18 +95,7 @@ export default function Season(props) {
                         mt={1}
                         >
                             {
-                                episodes.map((episode, index) => {
-                                    return(
-                                        <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                            inputProps={{ 'aria-label': 'controlled' }}
-                                            />
-                                        }
-                                        label={(index + 1) < 10 ? `EP0${index + 1}` : `EP${index + 1}`}
-                                        />
-                                    )
-                                })
+                                showEpisodes()
                             }
                         </Box>
                         <Box
@@ -80,7 +106,7 @@ export default function Season(props) {
                         </Box>
                     </Box>
                 </Paper>
-            </StyledModal>
+            </Modal>
         </>
     );
 }

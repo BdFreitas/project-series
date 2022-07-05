@@ -49,7 +49,7 @@ export default function Login() {
                 } else if (error.response.status === 400) {
                     showAlert(
                         "error",
-                        "Incorrect fields."
+                        "Please, complete all the fields."
                     )
                 } else {
                     showAlert(
