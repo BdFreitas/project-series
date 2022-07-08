@@ -3,7 +3,7 @@ package series.javaapi.request;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-public class AuthUserRequest
+public class ChangeUserPasswordRequest
 {
     // Attributes
     private Integer idUser;
@@ -15,15 +15,19 @@ public class AuthUserRequest
     @NotBlank
     private String password;
 
+    @NotBlank
+    private String newPassword;
+
     // Constructor
-    public AuthUserRequest(Integer idUser, String email, String password)
+    public ChangeUserPasswordRequest(Integer idUser, String email, String password, String newPassword)
     {
         this.idUser = idUser;
         this.email = email;
         this.password = password;
+        this.newPassword = newPassword;
     }
 
-    // Getters
+    // Getters and Setters
     public Integer getIdUser()
     {
         return idUser;
@@ -50,5 +54,15 @@ public class AuthUserRequest
     public void setPassword(String password)
     {
         this.password = password;
+    }
+
+    public String getNewPassword()
+    {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword)
+    {
+        this.newPassword = newPassword;
     }
 }

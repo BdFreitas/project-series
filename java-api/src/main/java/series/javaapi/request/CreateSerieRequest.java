@@ -2,10 +2,11 @@ package series.javaapi.request;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 public class CreateSerieRequest
 {
-    // Atributes
+    // Attributes
     @NotNull
     Integer idUser;
 
@@ -13,9 +14,11 @@ public class CreateSerieRequest
     private String name;
 
     @NotNull
+    @Positive
     private Integer seasons;
 
     @NotNull
+    @Positive
     private Integer episodes;
 
     // Getters

@@ -12,4 +12,6 @@ public interface EpisodeRepository extends JpaRepository<Episode, Integer>
     void deleteAllBySerieIdSerie(Integer idSerie);
 
     List<Episode> findBySeasonIdSeason(Integer episode);
+
+    Episode findByIdEpisode(Integer idEpisode);
 }

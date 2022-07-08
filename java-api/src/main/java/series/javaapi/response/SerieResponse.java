@@ -1,6 +1,5 @@
 package series.javaapi.response;
 
-import series.javaapi.entity.Episode;
 import series.javaapi.entity.Season;
 import series.javaapi.entity.Serie;
 
@@ -8,7 +7,7 @@ import java.util.List;
 
 public class SerieResponse
 {
-    //Atributes
+    //Attributes
     private Serie serie;
 
     private List<Season> seasons;

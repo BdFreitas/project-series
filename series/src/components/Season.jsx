@@ -1,8 +1,9 @@
 import StarBorder from "@mui/icons-material/StarBorder";
-import { Button, Checkbox, FormControlLabel, ListItemButton, ListItemIcon, ListItemText, Modal, Paper, Typography } from "@mui/material";
+import { Alert, Button, Checkbox, FormControlLabel, ListItemButton, ListItemIcon, ListItemText, Modal, Paper, Snackbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import api from "../api";
+import Episode from "./Episode";
 
 export default function Season(props) {
     //Episode's modal
@@ -10,43 +11,121 @@ export default function Season(props) {
 
     const handleClick = () => {
         setOpenEpisodes(true);
+        setEpisodes([]);
         getEpisodes();
         showEpisodes();
+        setChangedEps([]);
+    }
+
+    //Snackbar Alerts
+    const [openAlert, setOpenAlert] = useState(false);
+    const [severity, setSeverity] = useState("");
+    const [message, setMessage] = useState("");
+
+    function showAlert(severity, message) {
+        setSeverity(severity);
+        setMessage(message);
+        setOpenAlert(true);
+    }
+
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+            return
+        }
+
+        setOpenAlert(false);
     }
 
     //Episodes
     const [episodes, setEpisodes] = useState([]);
 
-    function getEpisodes()
-    {
+    function getEpisodes() {
         api
-        .get(`/episodes/${props.idSeason}`)
-        .then((response) => {
-            if (response.status === 200) {
-                setEpisodes(response.data);
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+            .get(`/episodes/${props.idSeason}`)
+            .then((response) => {
+                if (response.status === 200) {
+                    setEpisodes(response.data);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
-    function showEpisodes()
-    {
-        return(
+    const [changedEps, setChangedEps] = useState([]);
+
+    const saveEpChanges = (episode) => {
+        let array = changedEps;
+
+        for (let index = 0; index < array.length; index++) {
+            if (array[index].idEpisode === episode.idEpisode) {
+                array[index] = episode;
+                setChangedEps(array);
+                console.log(changedEps);
+                return;
+            }
+        }
+
+        array.push(episode);
+        setChangedEps(array);
+    }
+
+    function showEpisodes() {
+        return (
             episodes.map((episode, index) => {
-                return(
-                    <FormControlLabel
-                    control={
-                        <Checkbox
-                        inputProps={{ 'aria-label': 'controlled' }}
-                        />
-                    }
-                    label={(index + 1) < 10 ? `EP0${index + 1}` : `EP${index + 1}`}
+                return (
+                    <Episode
+                        idEpisode={episode.idEpisode}
+                        index={index}
+                        watched={episode.watched}
+                        method={saveEpChanges}
                     />
                 )
             })
         )
+    }
+
+    function save() {
+        let severity;
+        let message;
+        let bool = true;
+
+        if (changedEps.length === 0) {
+            severity = "warning";
+            message = "You can't save without changes!"
+
+            showAlert(
+                severity,
+                message
+            );
+
+            return;
+        }
+
+        api
+        .put("/episodes", changedEps)
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+            bool = false;
+        })
+
+        if (bool) {
+            severity = "success";
+            message = "Saved!";
+        } else {
+            severity = "success";
+            message = "CRITICAL: Unknown error!";
+        }
+
+        setOpenEpisodes(false);
+
+        showAlert(
+            severity,
+            message
+        );
     }
 
     return (
@@ -58,7 +137,6 @@ export default function Season(props) {
 
                 <ListItemText
                     primary={`Season ${props.index}`}
-                    secondary="10/20 watched episodes."
                 />
                 <Button onClick={handleClick}>Show episodes</Button>
             </ListItemButton>
@@ -76,9 +154,10 @@ export default function Season(props) {
             >
                 <Paper
                     sx={{
-                        height: "380px",
-                        width: "30%",
-                        padding: "20px"
+                        height: "450px",
+                        width: {xs: "60%", lg: "30%"},
+                        padding: "20px",
+                        overflowY: "auto"
                     }}
                 >
                     <Typography
@@ -89,24 +168,47 @@ export default function Season(props) {
                     </Typography>
                     <Box>
                         <Box
-                        display="flex"
-                        flexWrap="wrap"s
-                        justifyContent="space-evenly"
-                        mt={1}
+                            display="flex"
+                            flexWrap="wrap"
+                            justifyContent="space-evenly"
+                            mt={1}
                         >
                             {
                                 showEpisodes()
                             }
                         </Box>
                         <Box
-                        textAlign="center"
-                        mt={2}
+                            textAlign="center"
+                            mt={2}
                         >
-                            <Button variant="contained">Save</Button>
+                            <Button
+                                variant="contained"
+                                onClick={() => save()}
+                            >Save</Button>
                         </Box>
                     </Box>
                 </Paper>
             </Modal>
+
+            {/* Snackbar alerts */}
+            <Snackbar
+                open={openAlert}
+                onClose={handleCloseAlert}
+                anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right"
+                }}
+                autoHideDuration={3000}
+            >
+                <Alert
+                    variant="filled"
+                    sx={{ minWidth: "200px" }}
+                    onClose={handleCloseAlert}
+                    severity={severity}
+                >
+                    {message}
+                </Alert>
+            </Snackbar>
         </>
     );
 }

@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 @Entity
 public class Serie
 {
-    // Atributes
+    // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idSerie;

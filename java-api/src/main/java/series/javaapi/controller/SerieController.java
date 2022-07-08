@@ -11,7 +11,6 @@ import series.javaapi.repository.EpisodeRepository;
 import series.javaapi.repository.SeasonRepository;
 import series.javaapi.repository.SerieRepository;
 import series.javaapi.request.CreateSerieRequest;
-import series.javaapi.request.GetSerieRequest;
 import series.javaapi.response.SerieResponse;
 import series.javaapi.service.SerieService;
 
@@ -26,6 +25,7 @@ import static org.springframework.http.ResponseEntity.*;
 @RequestMapping("/series")
 public class SerieController
 {
+    //Attributes
     @Autowired
     private SerieRepository serieRepository;
 
@@ -35,9 +35,18 @@ public class SerieController
     @Autowired
     private EpisodeRepository episodeRepository;
 
+    //Endpoints
     @PostMapping
+    @CrossOrigin
     public ResponseEntity postSerie(@RequestBody @Valid CreateSerieRequest newSerie)
     {
+        Integer episodes = newSerie.getEpisodes();
+        Integer seasons = newSerie.getSeasons();
+
+        if (episodes > 25 || seasons > 10) {
+            return status(400).build();
+        }
+
         User user = new User();
         user.setIdUser(newSerie.getIdUser());
 
@@ -60,6 +69,7 @@ public class SerieController
     }
 
     @GetMapping("/{idUser}")
+    @CrossOrigin
     public ResponseEntity getSeries(@PathVariable Integer idUser)
     {
         List<SerieResponse> response = new ArrayList<SerieResponse>();
@@ -82,6 +92,8 @@ public class SerieController
     }
 
     @DeleteMapping("/{idSerie}")
+    @CrossOrigin
+
     public ResponseEntity deleteSerie(@PathVariable Integer idSerie)
     {
         if (!SerieService.validateId(idSerie)) {

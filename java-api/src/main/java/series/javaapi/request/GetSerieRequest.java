@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 
 public class GetSerieRequest
 {
-    //Atributes
+    //Attributes
     @NotNull
     private Integer idUser;
 

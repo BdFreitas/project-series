@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Season
 {
-    // Atributes
+    // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idSeason;

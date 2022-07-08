@@ -15,12 +15,12 @@ import { Box } from "@mui/system";
 import api from "../api";
 
 export default function Serie(props) {
-    //idSerie
+    //props
     const idSerie = props.idSerie;
 
     const updateSeriesAndShowAlert = props.update;
 
-    //Snackbar alerts
+    //List expandMore
     const [open, setOpen] = useState(false);
 
     const handleClick = () => {
@@ -28,6 +28,8 @@ export default function Serie(props) {
         setOpen(!open);
     };
 
+    //Seasons
+    const seasons = props.seasons;
 
     function showSeasons() {
         return (
@@ -41,9 +43,6 @@ export default function Serie(props) {
             })
         )
     }
-
-    //Seasons
-    const seasons = props.seasons;
 
     //Delete modal
     const [openDelete, setOpenDelete] = useState(false);
