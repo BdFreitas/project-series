@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import MoonIcon from '@mui/icons-material/Brightness3';
 import Logout from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import Serie from "../components/Serie";
 import api from "../api";
 
@@ -371,6 +373,23 @@ export default function Series() {
                                     <LiveTvIcon />
                                 </Grid>
                                 <Grid item display="flex" alignItems="center">
+                                    <Box marginRight={2}>
+                                        <Tooltip title="Check out my linkedin">
+                                            <IconButton
+                                                href="https://www.linkedin.com/in/breno-de-freitas-6003a723a/"
+                                            >
+                                                <LinkedInIcon />
+                                            </IconButton>
+                                        </Tooltip>
+
+                                        <Tooltip title="Check out my github">
+                                            <IconButton
+                                                href="https://github.com/BdFreitas"
+                                            >
+                                                <GitHubIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Box>
                                     <Tooltip title="Profile">
                                         <IconButton
                                             onClick={handleClick}
