@@ -142,6 +142,7 @@ export default function SignUp() {
                             variant="filled"
                             sx={{ width: "100%", margin: "20px 0" }}
                             onInput={(e) => setEmail(e.target.value)}
+                            inputProps={{ maxLength: 35 }}
                         />
                         <TextField
                             label="Password"
@@ -153,6 +154,7 @@ export default function SignUp() {
                             }}
                             type="password"
                             onInput={(e) => setPassword(e.target.value)}
+                            inputProps={{ maxLength: 20 }}
                         />
                         <TextField
                             label="Confirm password"
@@ -164,6 +166,7 @@ export default function SignUp() {
                             }}
                             type="password"
                             onInput={(e) => setConfirmedPassword(e.target.value)}
+                            inputProps={{ maxLength: 25 }}
                         />
 
                         <Box marginTop="20px">

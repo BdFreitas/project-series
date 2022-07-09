@@ -521,6 +521,7 @@ export default function Series() {
                                         variant="outlined"
                                         label="Name"
                                         onInput={(e) => setName(e.target.value)}
+                                        inputProps={{ maxLength: 25 }}
                                     />
                                     <TextField
                                         width="40px"
@@ -593,18 +594,21 @@ export default function Series() {
                                         label="your current password"
                                         type="password"
                                         onInput={(e) => setPassword(e.target.value)}
+                                        inputProps={{ maxLength: 20 }}
                                     />
                                     <TextField
                                         sx={{ marginBottom: "20px" }}
                                         label="your new password"
                                         type="password"
                                         onInput={(e) => setNewPassword(e.target.value)}
+                                        inputProps={{ maxLength: 20 }}
                                     />
                                     <TextField
                                         sx={{ marginBottom: "30px" }}
                                         label="confirm your new password"
                                         type="password"
                                         onInput={(e) => setConfirmedPassword(e.target.value)}
+                                        inputProps={{ maxLength: 20 }}
                                     />
                                 </Box>
                                 <Box textAlign="center">
