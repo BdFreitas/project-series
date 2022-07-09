@@ -116,7 +116,6 @@ export default function Homepage() {
         }
     }, []);
 
-
     return (
         <>
             <ThemeProvider theme={darkTheme}>
@@ -202,8 +201,8 @@ export default function Homepage() {
                         <Box paddingBottom="60px">
                             <Paper elevation={5}>
                                 <Typography variant="h5" component="p" padding={5} textAlign="center">
-                                    This project was 100% developed by me and only for trainning and portfolio...
-                                    As I said, it is my first material-ui project ever, so feel free to submit any feedbacks, I am here to learn ;)
+                                    This project was 100% developed by me and is only for practice and portfolio...
+                                    As I said, it's my first material-ui project ever, so feel free to submit any feedbacks, I'm here to learn ;)
                                 </Typography>
                             </Paper>
                         </Box>
@@ -295,7 +294,7 @@ export default function Homepage() {
                                     <Button
                                         variant="outlined"
                                         color="secondary"
-                                        onClick={() => sendFeedback()}    
+                                        onClick={() => sendFeedback()}
                                     >
                                         Send
                                     </Button>

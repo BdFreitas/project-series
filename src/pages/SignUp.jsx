@@ -1,4 +1,4 @@
-import { Button, Typography, Box, Paper, createTheme, TextField, ThemeProvider, Snackbar, Alert } from "@mui/material";
+import { Button, Typography, Box, Paper, createTheme, TextField, ThemeProvider, Snackbar, Alert, Backdrop, CircularProgress } from "@mui/material";
 import React from "react";
 import { pink } from "@mui/material/colors";
 import SignUpIcon from "@mui/icons-material/AssignmentInd";
@@ -46,10 +46,14 @@ export default function SignUp() {
             "password": password
         }
 
+        setOpenBackdrop(true);
+
         api
             .post("/users", user)
             .then((response) => {
                 if (response.status === 201) {
+                    setOpenBackdrop(false);
+
                     sessionStorage.setItem("idUser", response.data.idUser);
                     sessionStorage.setItem("email", response.data.email);
                     navigator("/series");
@@ -57,12 +61,16 @@ export default function SignUp() {
             })
             .catch((error) => {
                 if (error.response.status === 400) {
+                    setOpenBackdrop(false);
+
                     showAlert(
                         "error",
                         "This email is not valid!"
                     )
                 }
                 if (error.response.status === 409) {
+                    setOpenBackdrop(false);
+
                     showAlert(
                         "error",
                         "This email is alreay in use."
@@ -70,27 +78,6 @@ export default function SignUp() {
                 }
             })
     }
-
-    // //Validations
-    // function validateFields() {
-    //     if (password === "" || confirmedPassword === "" || email === "") {
-    //         let severity = "warning";
-    //         let message = "All the fields must be filled!"
-    //         showAlert(severity, message);
-
-    //         return false;
-    //     }
-    // }
-
-    // function validatePassword() {
-    //     if (password !== confirmedPassword) {
-    //         let severity = "warning";
-    //         let message = "The passwords must be matching!"
-    //         showAlert(severity, message);
-
-    //         return false;
-    //     }
-    // }
 
     //Snackbar alerts
     const [open, setOpen] = useState(false);
@@ -111,6 +98,9 @@ export default function SignUp() {
 
         setOpen(false);
     }
+
+    //Backdrop
+    const [openBackdrop, setOpenBackdrop] = React.useState(false);
 
     return (
         <>
@@ -218,6 +208,14 @@ export default function SignUp() {
                         </Alert>
                     </Snackbar>
 
+                    {/* Backdrop */}
+                    {/* Backdrop */}
+                    <Backdrop
+                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        open={openBackdrop}
+                    >
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
                 </Box>
             </ThemeProvider>
         </>
