@@ -1,2 +1,2 @@
 # project-series
-Spring/React app.
+Spring/React app - Series management.
