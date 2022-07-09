@@ -166,7 +166,7 @@ export default function SignUp() {
                             }}
                             type="password"
                             onInput={(e) => setConfirmedPassword(e.target.value)}
-                            inputProps={{ maxLength: 25 }}
+                            inputProps={{ maxLength: 20 }}
                         />
 
                         <Box marginTop="20px">
