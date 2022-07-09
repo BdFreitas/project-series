@@ -34,7 +34,7 @@ public class EpisodeController
             return status(404).build();
         }
 
-        List<Episode> episodes = episodeRepository.findBySeasonIdSeason(idSeason);
+        List<Episode> episodes = episodeRepository.findBySeasonIdSeasonOrderByIdEpisode(idSeason);
 
         return status(200).body(episodes);
     }
