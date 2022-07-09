@@ -1,6 +1,5 @@
 import { Checkbox, FormControlLabel } from "@mui/material";
 import React, { useState } from "react";
-import { useEffect } from "react";
 
 export default function Episode(props)
 {

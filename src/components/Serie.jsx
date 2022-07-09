@@ -10,7 +10,6 @@ import MovieIcon from '@mui/icons-material/Movie';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Alert, Button, IconButton, Modal, Paper, Snackbar, Tooltip, Typography } from "@mui/material";
 import Season from "./Season";
-import { useEffect } from "react";
 import { Box } from "@mui/system";
 import api from "../api";
 

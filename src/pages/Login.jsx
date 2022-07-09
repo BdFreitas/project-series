@@ -4,7 +4,6 @@ import { pink } from "@mui/material/colors";
 import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
-import { useEffect } from "react";
 import api from "../api";
 
 export default function Login() {
