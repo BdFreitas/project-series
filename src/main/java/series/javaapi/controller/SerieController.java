@@ -27,43 +27,18 @@ public class SerieController
 {
     //Attributes
     @Autowired
-    private SerieRepository serieRepository;
-
-    @Autowired
-    private SeasonRepository seasonRepository;
-
-    @Autowired
-    private EpisodeRepository episodeRepository;
+    SerieService serieService;
 
     //Endpoints
     @PostMapping
     @CrossOrigin
     public ResponseEntity postSerie(@RequestBody @Valid CreateSerieRequest newSerie)
     {
-        Integer episodes = newSerie.getEpisodes();
-        Integer seasons = newSerie.getSeasons();
-
-        if (episodes > 25 || seasons > 10) {
+        if (serieService.validateAmountOfSeasonsAndEpisodes(newSerie)) {
             return status(400).build();
         }
 
-        User user = new User();
-        user.setIdUser(newSerie.getIdUser());
-
-        Serie serie = new Serie(newSerie.getName(), user);
-        serieRepository.save(serie);
-        Serie createdSerie = serieRepository.
-                findFirstByFkUserIdUserOrderByIdSerieDesc(newSerie.getIdUser());
-
-        for (int i = 0; i < newSerie.getSeasons(); i++) {
-            Season season = new Season(createdSerie);
-            seasonRepository.save(season);
-
-            for (int j = 0; j < newSerie.getEpisodes(); j++) {
-                Episode episode = new Episode(season, createdSerie);
-                episodeRepository.save(episode);
-            }
-        }
+        serieService.postSerie(newSerie);
 
         return status(201).build();
     }
@@ -72,22 +47,8 @@ public class SerieController
     @CrossOrigin
     public ResponseEntity getSeries(@PathVariable Integer idUser)
     {
-        List<SerieResponse> response = new ArrayList<SerieResponse>();
-        List<Serie> series = serieRepository.
-                findByFkUserIdUserOrderByIdSerieDesc(idUser);
-
-        for (Serie serie : series) {
-            List<Season> seasons = seasonRepository.
-                    findBySerieIdSerie(serie.getIdSerie());
-
-            SerieResponse serieResponse = new SerieResponse(
-                    serie,
-                    seasons
-            );
-
-            response.add(serieResponse);
-        }
-
+        List<SerieResponse> response = serieService.
+                getSeriesByIdUser(idUser);
         return status(200).body(response);
     }
 
@@ -96,17 +57,9 @@ public class SerieController
 
     public ResponseEntity deleteSerie(@PathVariable Integer idSerie)
     {
-        if (!SerieService.validateId(idSerie)) {
-            return status(400).build();
-        }
-
-        if (!serieRepository.existsById(idSerie)) {
+        if (!serieService.checkIfSerieExistsById(idSerie)) {
             return status(404).build();
         }
-
-        episodeRepository.deleteAllBySerieIdSerie(idSerie);
-        seasonRepository.deleteAllBySerieIdSerie(idSerie);
-        serieRepository.deleteById(idSerie);
 
         return status(200).build();
     }
