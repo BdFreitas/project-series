@@ -26,7 +26,7 @@ export default function Login() {
 
     //Auth request
     function auth() {
-        if (email === "" || password == "") {
+        if (email === "" || password === "") {
             alert("oi")
             return;
         }
