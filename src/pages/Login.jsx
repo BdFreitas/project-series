@@ -27,7 +27,11 @@ export default function Login() {
     //Auth request
     function auth() {
         if (email === "" || password === "") {
-            alert("oi")
+            showAlert(
+                "warning",
+                "Please, complete all the fields!"
+            );
+
             return;
         }
 
