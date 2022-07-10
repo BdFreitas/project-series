@@ -26,6 +26,11 @@ export default function Login() {
 
     //Auth request
     function auth() {
+        if (email === "" || password == "") {
+            alert("oi")
+            return;
+        }
+
         const user = {
             "email": email,
             "password": password
@@ -53,8 +58,8 @@ export default function Login() {
                 } else if (error.response.status === 400) {
                     showAlert(
                         "error",
-                        "Please, complete all the fields."
-                    )
+                        "Invalid email."
+                    );
                 } else {
                     showAlert(
                         "error",
