@@ -1,6 +1,7 @@
 package series.javaapi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import series.javaapi.entity.Episode;
 import series.javaapi.entity.Season;
 import series.javaapi.entity.Serie;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import static org.springframework.http.ResponseEntity.status;
 
+@Service
 public class SerieService
 {
     //Atributes
