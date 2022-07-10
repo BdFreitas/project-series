@@ -62,7 +62,7 @@ export default function Login() {
                 } else if (error.response.status === 400) {
                     showAlert(
                         "error",
-                        "This email is invalid email."
+                        "This email is invalid."
                     );
                 } else {
                     showAlert(
