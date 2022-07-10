@@ -26,7 +26,7 @@ public class SerieController
     @CrossOrigin
     public ResponseEntity postSerie(@RequestBody @Valid CreateSerieRequest newSerie)
     {
-        if (serieService.validateAmountOfSeasonsAndEpisodes(newSerie)) {
+        if (!serieService.validateAmountOfSeasonsAndEpisodes(newSerie)) {
             return status(400).build();
         }
 
@@ -52,6 +52,8 @@ public class SerieController
         if (!serieService.checkIfSerieExistsById(idSerie)) {
             return status(404).build();
         }
+
+        serieService.deleteSerieByIdSerie(idSerie);
 
         return status(200).build();
     }
