@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import series.javaapi.entity.User;
-import series.javaapi.repository.UserRepository;
 import series.javaapi.request.AuthUserRequest;
 import series.javaapi.request.ChangeUsersPasswordRequest;
 import series.javaapi.service.UserService;

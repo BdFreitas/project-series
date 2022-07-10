@@ -3,20 +3,12 @@ package series.javaapi.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import series.javaapi.entity.Episode;
-import series.javaapi.entity.Season;
-import series.javaapi.entity.Serie;
-import series.javaapi.entity.User;
-import series.javaapi.repository.EpisodeRepository;
-import series.javaapi.repository.SeasonRepository;
-import series.javaapi.repository.SerieRepository;
 import series.javaapi.request.CreateSerieRequest;
 import series.javaapi.response.SerieResponse;
 import series.javaapi.service.SerieService;
 
 import javax.validation.Valid;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.http.ResponseEntity.*;

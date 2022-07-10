@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import series.javaapi.entity.Feedback;
-import series.javaapi.repository.FeedbackRepository;
 import series.javaapi.service.FeedbackService;
 
 import javax.validation.Valid;

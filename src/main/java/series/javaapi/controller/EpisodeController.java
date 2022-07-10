@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import series.javaapi.entity.Episode;
-import series.javaapi.repository.EpisodeRepository;
-import series.javaapi.repository.SeasonRepository;
 import series.javaapi.request.PutEpisodeRequest;
 import series.javaapi.service.EspisodeService;
 
