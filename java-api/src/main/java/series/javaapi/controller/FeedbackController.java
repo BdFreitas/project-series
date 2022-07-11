@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import series.javaapi.entity.Feedback;
-import series.javaapi.repository.FeedbackRepository;
+import series.javaapi.service.FeedbackService;
 
 import javax.validation.Valid;
 
@@ -16,14 +16,14 @@ public class FeedbackController
 {
     //Attributes
     @Autowired
-    private FeedbackRepository feedbackRepository;
+    private FeedbackService feedbackService;
 
     //Endpoints
     @PostMapping
     @CrossOrigin
     public ResponseEntity postFeedback(@RequestBody @Valid Feedback feedback)
     {
-        feedbackRepository.save(feedback);
+        feedbackService.save(feedback);
         return status(201).build();
     }
 }

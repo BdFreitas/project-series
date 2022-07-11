@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import series.javaapi.entity.Episode;
-import series.javaapi.repository.EpisodeRepository;
-import series.javaapi.repository.SeasonRepository;
 import series.javaapi.request.PutEpisodeRequest;
+import series.javaapi.service.EspisodeService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -19,10 +18,7 @@ public class EpisodeController
 {
     //Attributes
     @Autowired
-    private EpisodeRepository episodeRepository;
-
-    @Autowired
-    private SeasonRepository seasonRepository;
+    private EspisodeService episodeService;
 
     //Endpoints
     @GetMapping("/{idSeason}")
@@ -30,26 +26,20 @@ public class EpisodeController
     public ResponseEntity getEpisodesByIdSeason(
             @PathVariable Integer idSeason)
     {
-        if (!seasonRepository.existsById(idSeason)) {
+        List<Episode> episodes = episodeService.findEpisodesByIdSeasonOrderByIdEpisode(idSeason);
+
+        if (episodes.equals(null)) {
             return status(404).build();
         }
-
-        List<Episode> episodes = episodeRepository.findBySeasonIdSeason(idSeason);
 
         return status(200).body(episodes);
     }
 
     @PutMapping
     @CrossOrigin
-    public ResponseEntity putEpisodes(@RequestBody @Valid List<PutEpisodeRequest> episodesList)
+    public ResponseEntity putWatchedEpisodes(@RequestBody @Valid List<PutEpisodeRequest> episodeList)
     {
-        for (PutEpisodeRequest listEpisode : episodesList) {
-            Episode episode = episodeRepository.findByIdEpisode(listEpisode.getIdEpisode());
-            episode.setWatched(listEpisode.getWatched());
-
-            episodeRepository.save(episode);
-        }
-
+        episodeService.saveWatchedEpisodes(episodeList);
         return status(200).build();
     }
 }

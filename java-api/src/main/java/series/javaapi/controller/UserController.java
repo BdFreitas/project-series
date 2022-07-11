@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import series.javaapi.entity.User;
-import series.javaapi.repository.UserRepository;
 import series.javaapi.request.AuthUserRequest;
-import series.javaapi.request.ChangeUserPasswordRequest;
+import series.javaapi.request.ChangeUsersPasswordRequest;
+import series.javaapi.service.UserService;
 
 import javax.validation.Valid;
 
@@ -19,69 +19,40 @@ public class UserController
 {
     //Attributes
     @Autowired
-    private UserRepository userRepository;
-
+    UserService userService;
 
     //Endpoints
     @PostMapping
     @CrossOrigin
     public ResponseEntity postUser(@RequestBody @Valid User user)
     {
-        String email = user.getEmail();
-
-        User checkIfEmailExists = userRepository.
-                findByEmail(email);
-
-        if (checkIfEmailExists != null) {
+        if (userService.checkIfEmailExists(user)) {
             return status(409).build();
         }
 
-        userRepository.save(user);
-
-        User savedUser = userRepository.
-                findByEmail(email);
-
-        return status(201).body(savedUser);
+        return status(201).body(userService.postUser(user));
     }
 
     @PostMapping("/authentication")
     @CrossOrigin
     public ResponseEntity authUser(@RequestBody @Valid AuthUserRequest user)
     {
-        String email = user.getEmail();
-        String password = user.getPassword();
+        AuthUserRequest authenticatedUser = userService.authUser(user);
 
-        AuthUserRequest authUser = userRepository.
-                findByEmailAndPassword(email, password);
-
-        if (authUser == null) {
+        if (authenticatedUser == null) {
             return status(404).build();
         }
 
-        return status(200).body(authUser);
+        return status(200).body(authenticatedUser);
     }
 
     @PutMapping
     @CrossOrigin
-    public ResponseEntity putUserPassword(@RequestBody @Valid ChangeUserPasswordRequest userRequest)
+    public ResponseEntity putUserPassword(@RequestBody @Valid ChangeUsersPasswordRequest userRequest)
     {
-        String email = userRequest.getEmail();
-        String password = userRequest.getPassword();
-        String newPassword = userRequest.getNewPassword();
-
-        AuthUserRequest oldUser = userRepository.findByEmailAndPassword(
-                email,
-                password
-        );
-
-        if (oldUser == null) {
+        if (!userService.changeUsersPassword(userRequest)) {
             return status(404).build();
         }
-
-        User newUser = userRepository.getById(oldUser.getIdUser());
-        newUser.setPassword(newPassword);
-
-        userRepository.save(newUser);
 
         return status(200).build();
     }
