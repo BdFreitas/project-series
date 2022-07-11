@@ -1,10 +1,9 @@
-import { Button, Typography, Box, Paper, createTheme, TextField, ThemeProvider, Snackbar, Alert } from "@mui/material";
+import { Button, Typography, Box, Paper, createTheme, TextField, ThemeProvider, Snackbar, Alert, Backdrop, CircularProgress } from "@mui/material";
 import React, { useState } from "react";
 import { pink } from "@mui/material/colors";
 import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
-import { useEffect } from "react";
 import api from "../api";
 
 export default function Login() {
@@ -27,20 +26,34 @@ export default function Login() {
 
     //Auth request
     function auth() {
+        if (email === "" || password === "") {
+            showAlert(
+                "warning",
+                "Please, complete all the fields!"
+            );
+
+            return;
+        }
+
         const user = {
             "email": email,
             "password": password
         }
 
+        setOpenBackdrop(true);
+
         api.post("/users/authentication", user)
             .then((response) => {
                 if (response.status === 200) {
+                    setOpenBackdrop(false);
                     sessionStorage.setItem("idUser", response.data.idUser);
                     sessionStorage.setItem("email", response.data.email);
                     navigator("/series");
                 }
             })
             .catch((error) => {
+                setOpenBackdrop(false);
+
                 if (error.response.status === 404) {
                     showAlert(
                         "error",
@@ -49,8 +62,8 @@ export default function Login() {
                 } else if (error.response.status === 400) {
                     showAlert(
                         "error",
-                        "Please, complete all the fields."
-                    )
+                        "This email is invalid."
+                    );
                 } else {
                     showAlert(
                         "error",
@@ -78,6 +91,9 @@ export default function Login() {
 
         setOpen(false);
     }
+
+    //Backdrop
+    const [openBackdrop, setOpenBackdrop] = React.useState(false);
 
     return (
         <>
@@ -144,6 +160,14 @@ export default function Login() {
                             {message}
                         </Alert>
                     </Snackbar>
+
+                    {/* Backdrop */}
+                    <Backdrop
+                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        open={openBackdrop}
+                    >
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
                 </Box>
             </ThemeProvider>
         </>

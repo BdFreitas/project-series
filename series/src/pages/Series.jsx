@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Alert, AppBar, Avatar, Box, Button, Container, createTheme, Divider, Fab, Grid, IconButton, Menu, MenuItem, Modal, Paper, Snackbar, Stack, styled, Switch, TextField, ThemeProvider, Toolbar, Tooltip, Typography } from "@mui/material";
+import { Alert, AppBar, Avatar, Box, Button, Container, createTheme, Divider, Fab, Grid, IconButton, Menu, MenuItem, Modal, Paper, Snackbar, Stack, Switch, TextField, ThemeProvider, Toolbar, Tooltip, Typography } from "@mui/material";
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 import { pink } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import MoonIcon from '@mui/icons-material/Brightness3';
 import Logout from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import Serie from "../components/Serie";
 import api from "../api";
 
@@ -371,6 +373,23 @@ export default function Series() {
                                     <LiveTvIcon />
                                 </Grid>
                                 <Grid item display="flex" alignItems="center">
+                                    <Box marginRight={2}>
+                                        <Tooltip title="Check out my linkedin">
+                                            <IconButton
+                                                href="https://www.linkedin.com/in/breno-de-freitas-6003a723a/"
+                                            >
+                                                <LinkedInIcon />
+                                            </IconButton>
+                                        </Tooltip>
+
+                                        <Tooltip title="Check out my github">
+                                            <IconButton
+                                                href="https://github.com/BdFreitas"
+                                            >
+                                                <GitHubIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Box>
                                     <Tooltip title="Profile">
                                         <IconButton
                                             onClick={handleClick}
@@ -521,6 +540,7 @@ export default function Series() {
                                         variant="outlined"
                                         label="Name"
                                         onInput={(e) => setName(e.target.value)}
+                                        inputProps={{ maxLength: 25 }}
                                     />
                                     <TextField
                                         width="40px"
@@ -593,18 +613,21 @@ export default function Series() {
                                         label="your current password"
                                         type="password"
                                         onInput={(e) => setPassword(e.target.value)}
+                                        inputProps={{ maxLength: 20 }}
                                     />
                                     <TextField
                                         sx={{ marginBottom: "20px" }}
                                         label="your new password"
                                         type="password"
                                         onInput={(e) => setNewPassword(e.target.value)}
+                                        inputProps={{ maxLength: 20 }}
                                     />
                                     <TextField
                                         sx={{ marginBottom: "30px" }}
                                         label="confirm your new password"
                                         type="password"
                                         onInput={(e) => setConfirmedPassword(e.target.value)}
+                                        inputProps={{ maxLength: 20 }}
                                     />
                                 </Box>
                                 <Box textAlign="center">

@@ -1,5 +1,5 @@
-import StarBorder from "@mui/icons-material/StarBorder";
-import { Alert, Button, Checkbox, FormControlLabel, ListItemButton, ListItemIcon, ListItemText, Modal, Paper, Snackbar, Typography } from "@mui/material";
+import ListIcon from '@mui/icons-material/Remove';
+import { Alert, Button, ListItemButton, ListItemIcon, ListItemText, Modal, Paper, Snackbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import api from "../api";
@@ -132,7 +132,7 @@ export default function Season(props) {
         <>
             <ListItemButton sx={{ pl: 4 }}>
                 <ListItemIcon>
-                    <StarBorder />
+                    <ListIcon />
                 </ListItemIcon>
 
                 <ListItemText
